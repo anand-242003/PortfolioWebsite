@@ -18,10 +18,10 @@ const ContactSection = () => {
   };
 
   const socialLinks = [
-    { label: 'GitHub', href: '#', icon: 'GH' },
-    { label: 'LinkedIn', href: '#', icon: 'LI' },
-    { label: 'Twitter', href: '#', icon: 'TW' },
-    { label: 'Email', href: 'mailto:hello@anandmishra.dev', icon: '@' },
+    { label: 'GitHub', href: 'https://github.com/anand-242003', icon: 'GH' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anand-mishra-a3a306225/', icon: 'LI' },
+    { label: 'LeetCode', href: 'https://leetcode.com/u/Sir_anand/', icon: 'LC' },
+    { label: 'Email', href: 'mailto:anandmishra3001@gmail.com', icon: '@' },
   ];
 
   return (

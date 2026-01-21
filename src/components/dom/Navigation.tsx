@@ -19,9 +19,14 @@ const Navigation = () => {
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Contact', href: '#contact' },
+    { label: 'Resume', href: '/Resume-Anand Mishra (7).pdf', external: true },
   ];
 
-  const scrollToSection = (href: string) => {
+  const scrollToSection = (href: string, external?: boolean) => {
+    if (external) {
+      window.open(href, '_blank');
+      return;
+    }
     const element = document.querySelector(href);
     element?.scrollIntoView({ behavior: 'smooth' });
     setIsMobileMenuOpen(false);
@@ -55,7 +60,7 @@ const Navigation = () => {
             {navLinks.map((link) => (
               <button
                 key={link.label}
-                onClick={() => scrollToSection(link.href)}
+                onClick={() => scrollToSection(link.href, link.external)}
                 className="text-muted-foreground hover:text-foreground transition-colors font-medium link-underline"
               >
                 {link.label}
@@ -110,7 +115,7 @@ const Navigation = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.1 }}
-                onClick={() => scrollToSection(link.href)}
+                onClick={() => scrollToSection(link.href, link.external)}
                 className="text-3xl font-display font-bold text-foreground hover:text-primary transition-colors"
               >
                 {link.label}

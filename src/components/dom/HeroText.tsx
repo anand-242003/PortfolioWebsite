@@ -39,7 +39,7 @@ const HeroText = () => {
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/50">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
             <span className="text-sm font-mono text-muted-foreground uppercase tracking-wider">
-              Full Stack Developer & AI Engineer
+              Full-Stack Developer
             </span>
           </span>
         </motion.div>
@@ -59,8 +59,8 @@ const HeroText = () => {
           variants={itemVariants}
           className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-          Crafting <span className="text-primary text-glow">living digital experiences</span> through 
-          code, creativity, and cutting-edge AI technology.
+          Building <span className="text-primary text-glow">scalable web applications</span> with 
+          modern technologies and clean, efficient code.
         </motion.p>
 
         {/* CTA Buttons */}

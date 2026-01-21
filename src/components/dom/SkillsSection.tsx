@@ -5,7 +5,6 @@ const SkillsSection = () => {
   const categories = [
     { id: 'frontend', label: 'Frontend', color: 'bg-primary' },
     { id: 'backend', label: 'Backend', color: 'bg-accent' },
-    { id: 'ai', label: 'AI / ML', color: 'bg-red-500' },
     { id: 'database', label: 'Database', color: 'bg-teal-500' },
     { id: 'tools', label: 'Tools', color: 'bg-purple-500' },
   ];

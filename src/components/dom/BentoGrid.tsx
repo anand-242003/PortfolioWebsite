@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { projects, Project } from '@/store/useStore';
-import jobPortalImage from '@/assets/job-portal-hero.jpg';
-import emwareAiImage from '@/assets/emware-ai-hero.jpg';
 
 const projectImages: Record<string, string> = {
-  'job-portal': jobPortalImage,
-  'emware-ai': emwareAiImage,
+  'job-portal': '/JOB_portal.png',
+  'emware-ai': '/Emware.ai.png',
+  'drk-mttr': '/DRLMTTR.png',
+  'portfolio-html': '/PortfolioHtml.png',
 };
 
 interface ProjectCardProps {
@@ -16,6 +16,14 @@ interface ProjectCardProps {
 const ProjectCard = ({ project, index }: ProjectCardProps) => {
   const image = projectImages[project.image] || '';
 
+  const handleClick = () => {
+    if (project.link) {
+      window.open(project.link, '_blank');
+    } else if (project.github) {
+      window.open(project.github, '_blank');
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -23,6 +31,7 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       className="bento-card group cursor-pointer"
+      onClick={handleClick}
     >
       {/* Project Image */}
       <div className="relative h-56 mb-6 rounded-xl overflow-hidden">
