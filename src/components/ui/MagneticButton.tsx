@@ -6,13 +6,15 @@ interface MagneticButtonProps {
   onClick?: () => void;
   className?: string;
   variant?: 'primary' | 'secondary' | 'outline';
+  disabled?: boolean;
 }
 
 const MagneticButton = ({ 
   children, 
   onClick, 
   className = '',
-  variant = 'primary' 
+  variant = 'primary',
+  disabled = false
 }: MagneticButtonProps) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -22,7 +24,7 @@ const MagneticButton = ({
   const y = useSpring(0, springConfig);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
+    if (!buttonRef.current || disabled) return;
 
     const rect = buttonRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -57,21 +59,23 @@ const MagneticButton = ({
       ref={buttonRef}
       onClick={onClick}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => !disabled && setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
+      disabled={disabled}
       style={{ x, y }}
       className={`
         relative inline-flex items-center justify-center
         px-8 py-4 font-display font-semibold text-sm uppercase tracking-wider
         rounded-lg transition-all duration-300
         ${variants[variant]}
+        ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
         ${className}
       `}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
+      whileHover={disabled ? {} : { scale: 1.05 }}
+      whileTap={disabled ? {} : { scale: 0.95 }}
     >
       <span className="relative z-10">{children}</span>
-      {isHovered && (
+      {isHovered && !disabled && (
         <motion.div
           className="absolute inset-0 rounded-lg bg-primary/20"
           initial={{ opacity: 0, scale: 0.8 }}

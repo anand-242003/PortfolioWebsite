@@ -11,7 +11,7 @@ import Footer from '@/components/dom/Footer';
 import FluidCursor from '@/components/ui/FluidCursor';
 
 // Lazy load heavy 3D component
-const NeuralNetwork = lazy(() => import('@/components/canvas/NeuralNetwork'));
+const NeuralNetworkEnhanced = lazy(() => import('@/components/canvas/NeuralNetworkEnhanced'));
 
 // Loading screen component
 const LoadingScreen = () => (
@@ -89,10 +89,25 @@ const Index = () => {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-screen overflow-hidden bg-background">
+        {/* Subtle diagonal lines pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="diagonal-lines" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                <line x1="0" y1="40" x2="40" y2="0" stroke="#ccff00" strokeWidth="0.5" opacity="0.3" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#diagonal-lines)" />
+          </svg>
+        </div>
+        
+        {/* 3D Canvas with spheres and globe */}
         <Suspense fallback={<Canvas3DFallback />}>
-          <NeuralNetwork mousePosition={mousePosition} />
+          <NeuralNetworkEnhanced mousePosition={mousePosition} />
         </Suspense>
+        
+        {/* Content */}
         <HeroText />
       </section>
 

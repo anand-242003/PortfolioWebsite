@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
 import MagneticButton from '@/components/ui/MagneticButton';
-import KineticText from '@/components/ui/KineticText';
 
 const HeroText = () => {
   const containerVariants = {
@@ -33,34 +32,28 @@ const HeroText = () => {
       initial="hidden"
       animate="visible"
     >
-      <div className="text-center px-6 max-w-5xl pointer-events-auto">
+      <div className="text-center px-6 max-w-6xl pointer-events-auto">
         {/* Pre-title */}
-        <motion.div variants={itemVariants} className="mb-6">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-card/50 backdrop-blur-sm border border-border/50">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-mono text-muted-foreground uppercase tracking-wider">
-              Full-Stack Developer
-            </span>
+        <motion.div variants={itemVariants} className="mb-8">
+          <span className="inline-flex items-center gap-2 text-sm font-mono text-muted-foreground uppercase tracking-[0.3em]">
+            <span className="w-2 h-2 rounded-full bg-primary" />
+            Full Stack Developer & AI Engineer
           </span>
         </motion.div>
 
-        {/* Main Title */}
+        {/* Main Title - STATIC, NO ANIMATION */}
         <motion.div variants={itemVariants} className="mb-8">
-          <KineticText 
-            as="h1" 
-            className="text-6xl md:text-8xl lg:text-9xl font-bold text-foreground leading-none"
-          >
+          <h1 className="text-7xl md:text-8xl lg:text-[10rem] font-bold text-foreground leading-none tracking-tight">
             Anand Mishra
-          </KineticText>
+          </h1>
         </motion.div>
 
         {/* Subtitle */}
         <motion.p 
           variants={itemVariants}
-          className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
         >
-          Building <span className="text-primary text-glow">scalable web applications</span> with 
-          modern technologies and clean, efficient code.
+          Crafting <span className="text-primary">living digital experiences</span> through code, creativity, and cutting-edge AI technology.
         </motion.p>
 
         {/* CTA Buttons */}

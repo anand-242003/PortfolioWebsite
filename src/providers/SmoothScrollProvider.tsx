@@ -12,7 +12,7 @@ interface SmoothScrollProviderProps {
   children: ReactNode;
 }
 
-export const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
+const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) => {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) =>
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false,
+      touchMultiplier: 2,
     });
 
     lenisRef.current = lenis;
@@ -47,3 +47,5 @@ export const SmoothScrollProvider = ({ children }: SmoothScrollProviderProps) =>
 
   return <>{children}</>;
 };
+
+export default SmoothScrollProvider;

@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { SiLeetcode } from 'react-icons/si';
+import emailjs from '@emailjs/browser';
+import { toast } from 'sonner';
 import MagneticButton from '@/components/ui/MagneticButton';
 
 const ContactSection = () => {
@@ -8,20 +12,70 @@ const ContactSection = () => {
     email: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
-    // Reset form
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+
+    try {
+      // EmailJS configuration from environment variables
+      // Create a .env file based on .env.example and add your EmailJS credentials
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+
+      // Check if credentials are configured
+      if (serviceId === 'YOUR_SERVICE_ID' || !serviceId) {
+        toast.error('Email service not configured. Please contact me at anandmishra3001@gmail.com');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+        to_email: 'anandmishra3001@gmail.com',
+      };
+
+      await emailjs.send(serviceId, templateId, templateParams, publicKey);
+      
+      toast.success('Message sent successfully! I\'ll get back to you soon.');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Email send error:', error);
+      toast.error('Failed to send message. Please try again or email me directly at anandmishra3001@gmail.com');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const socialLinks = [
-    { label: 'GitHub', href: 'https://github.com/anand-242003', icon: 'GH' },
-    { label: 'LinkedIn', href: 'https://www.linkedin.com/in/anand-mishra-a3a306225/', icon: 'LI' },
-    { label: 'LeetCode', href: 'https://leetcode.com/u/Sir_anand/', icon: 'LC' },
-    { label: 'Email', href: 'mailto:anandmishra3001@gmail.com', icon: '@' },
+    { 
+      label: 'GitHub', 
+      href: 'https://github.com/anand-242003', 
+      icon: FaGithub,
+      color: 'hover:text-[#333] dark:hover:text-white'
+    },
+    { 
+      label: 'LinkedIn', 
+      href: 'https://www.linkedin.com/in/anand-mishra-a3a306225/', 
+      icon: FaLinkedin,
+      color: 'hover:text-[#0077b5]'
+    },
+    { 
+      label: 'LeetCode', 
+      href: 'https://leetcode.com/u/Sir_anand/', 
+      icon: SiLeetcode,
+      color: 'hover:text-[#FFA116]'
+    },
+    { 
+      label: 'Email', 
+      href: 'mailto:anandmishra3001@gmail.com', 
+      icon: FaEnvelope,
+      color: 'hover:text-[#EA4335]'
+    },
   ];
 
   return (
@@ -114,8 +168,8 @@ const ContactSection = () => {
           </div>
 
           <div className="flex justify-center">
-            <MagneticButton variant="primary">
-              Send Message
+            <MagneticButton variant="primary" disabled={isSubmitting}>
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </MagneticButton>
           </div>
         </motion.form>
@@ -128,19 +182,23 @@ const ContactSection = () => {
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-16 flex justify-center gap-6"
         >
-          {socialLinks.map((link) => (
-            <motion.a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -4 }}
-              whileTap={{ scale: 0.95 }}
-              className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
-            >
-              <span className="font-mono text-sm">{link.icon}</span>
-            </motion.a>
-          ))}
+          {socialLinks.map((link) => {
+            const Icon = link.icon;
+            return (
+              <motion.a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, y: -4 }}
+                whileTap={{ scale: 0.95 }}
+                className={`w-14 h-14 rounded-full bg-card border border-border flex items-center justify-center text-muted-foreground hover:border-primary transition-all ${link.color}`}
+                aria-label={link.label}
+              >
+                <Icon className="w-6 h-6" />
+              </motion.a>
+            );
+          })}
         </motion.div>
       </div>
     </section>
