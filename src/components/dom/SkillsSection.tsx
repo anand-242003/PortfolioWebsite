@@ -12,7 +12,7 @@ const skillIcons: Record<string, string> = {
   express: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original-wordmark.svg',
   python: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
   redux: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg',
-  zod: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/zod/zod-original.svg',
+  zod: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiMzRTdDRkYiLz4KPHBhdGggZD0iTTUwIDYwSDEzMEwxMzAgODBMNzAgMTQwSDE1MEwxNTAgMTYwSDcwTDcwIDE0MEwxMzAgODBINTBMNTAgNjBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=',
   prisma: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg',
   mysql: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
   mongodb: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
