@@ -4,7 +4,6 @@ import { FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
 import emailjs from '@emailjs/browser';
 import { toast } from 'sonner';
-import MagneticButton from '@/components/ui/MagneticButton';
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -19,13 +18,10 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      // EmailJS configuration from environment variables
-      // Create a .env file based on .env.example and add your EmailJS credentials
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
       const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
 
-      // Check if credentials are configured
       if (serviceId === 'YOUR_SERVICE_ID' || !serviceId) {
         toast.error('Email service not configured. Please contact me at anandmishra3001@gmail.com');
         setIsSubmitting(false);
@@ -168,9 +164,13 @@ const ContactSection = () => {
           </div>
 
           <div className="flex justify-center">
-            <MagneticButton variant="primary" disabled={isSubmitting}>
+            <button 
+              type="submit"
+              disabled={isSubmitting}
+              className="px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               {isSubmitting ? 'Sending...' : 'Send Message'}
-            </MagneticButton>
+            </button>
           </div>
         </motion.form>
 

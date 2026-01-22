@@ -45,7 +45,6 @@ const Footer = () => {
             AM<span className="text-primary">.</span>
           </motion.a>
 
-          {/* Social Links */}
           <div className="flex items-center gap-6">
             {socialLinks.map((link) => {
               const Icon = link.icon;
@@ -66,7 +65,6 @@ const Footer = () => {
             })}
           </div>
 
-          {/* Copyright & Status */}
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6">
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />

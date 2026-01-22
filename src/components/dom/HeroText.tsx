@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion';
-import MagneticButton from '@/components/ui/MagneticButton';
 
 const HeroText = () => {
   const containerVariants = {
@@ -33,7 +32,6 @@ const HeroText = () => {
       animate="visible"
     >
       <div className="text-center px-6 max-w-6xl pointer-events-auto">
-        {/* Pre-title */}
         <motion.div variants={itemVariants} className="mb-8">
           <span className="inline-flex items-center gap-2 text-sm font-mono text-muted-foreground uppercase tracking-[0.3em]">
             <span className="w-2 h-2 rounded-full bg-primary" />
@@ -41,14 +39,12 @@ const HeroText = () => {
           </span>
         </motion.div>
 
-        {/* Main Title - STATIC, NO ANIMATION */}
         <motion.div variants={itemVariants} className="mb-8">
           <h1 className="text-7xl md:text-8xl lg:text-[10rem] font-bold text-foreground leading-none tracking-tight">
             Anand Mishra
           </h1>
         </motion.div>
 
-        {/* Subtitle */}
         <motion.p 
           variants={itemVariants}
           className="text-lg md:text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed"
@@ -56,26 +52,24 @@ const HeroText = () => {
           Crafting <span className="text-primary">living digital experiences</span> through code, creativity, and cutting-edge AI technology.
         </motion.p>
 
-        {/* CTA Buttons */}
         <motion.div 
           variants={itemVariants}
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
-          <MagneticButton 
-            variant="primary"
+          <button
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
           >
             View Projects
-          </MagneticButton>
-          <MagneticButton 
-            variant="outline"
+          </button>
+          <button
             onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            className="px-8 py-3 border border-border rounded-lg hover:bg-accent transition-colors font-medium"
           >
             Get In Touch
-          </MagneticButton>
+          </button>
         </motion.div>
 
-        {/* Scroll Indicator */}
         <motion.div 
           variants={itemVariants}
           className="absolute bottom-12 left-1/2 -translate-x-1/2"

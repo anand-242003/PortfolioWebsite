@@ -13,65 +13,61 @@ const FluidCursor = () => {
   const particlesRef = useRef<Particle[]>([]);
   const mousePosition = useMousePosition();
   const animationRef = useRef<number>();
+  const frameCountRef = useRef(0);
 
   const animate = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Add new particle at mouse position
-    if (mousePosition.x !== 0 || mousePosition.y !== 0) {
+    frameCountRef.current++;
+    if (frameCountRef.current % 3 === 0 && (mousePosition.x !== 0 || mousePosition.y !== 0)) {
       particlesRef.current.push({
         x: mousePosition.x,
         y: mousePosition.y,
-        opacity: 0.8,
+        opacity: 0.5,
         scale: 1,
       });
     }
 
-    // Update and draw particles
     particlesRef.current = particlesRef.current.filter((particle) => {
-      particle.opacity -= 0.02;
-      particle.scale *= 0.96;
+      particle.opacity -= 0.04;
+      particle.scale *= 0.94;
 
       if (particle.opacity <= 0) return false;
 
-      // Draw particle
       const gradient = ctx.createRadialGradient(
         particle.x,
         particle.y,
         0,
         particle.x,
         particle.y,
-        20 * particle.scale
+        15 * particle.scale
       );
       gradient.addColorStop(0, `rgba(204, 255, 0, ${particle.opacity})`);
       gradient.addColorStop(1, 'rgba(204, 255, 0, 0)');
 
       ctx.beginPath();
-      ctx.arc(particle.x, particle.y, 20 * particle.scale, 0, Math.PI * 2);
+      ctx.arc(particle.x, particle.y, 15 * particle.scale, 0, Math.PI * 2);
       ctx.fillStyle = gradient;
       ctx.fill();
 
       return true;
     });
 
-    // Draw main cursor
     if (mousePosition.x !== 0 || mousePosition.y !== 0) {
       ctx.beginPath();
-      ctx.arc(mousePosition.x, mousePosition.y, 8, 0, Math.PI * 2);
+      ctx.arc(mousePosition.x, mousePosition.y, 6, 0, Math.PI * 2);
       ctx.fillStyle = '#ccff00';
       ctx.fill();
     }
 
-    // Limit particles array
-    if (particlesRef.current.length > 50) {
-      particlesRef.current = particlesRef.current.slice(-50);
+    if (particlesRef.current.length > 20) {
+      particlesRef.current = particlesRef.current.slice(-20);
     }
 
     animationRef.current = requestAnimationFrame(animate);
@@ -87,7 +83,7 @@ const FluidCursor = () => {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     animationRef.current = requestAnimationFrame(animate);
 
@@ -104,6 +100,7 @@ const FluidCursor = () => {
       ref={canvasRef}
       className="fixed inset-0 pointer-events-none z-[9999]"
       style={{ mixBlendMode: 'screen' }}
+      aria-hidden="true"
     />
   );
 };

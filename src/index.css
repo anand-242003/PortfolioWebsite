@@ -2,19 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Living System Portfolio - Anti-AI Aesthetic Design System */
-/* All colors in HSL for Tailwind compatibility */
+
 
 @layer base {
   :root {
-    /* Core Palette */
     --void-black: 0 0% 2%;
     --acid-green: 73 100% 50%;
     --deep-concrete: 0 0% 11%;
     --signal-blue: 227 100% 58%;
     --off-white: 0 0% 88%;
     
-    /* Semantic Tokens */
     --background: 0 0% 2%;
     --foreground: 0 0% 88%;
 
@@ -45,14 +42,12 @@
 
     --radius: 0.5rem;
 
-    /* Custom Design Tokens */
     --glow-primary: 0 0 20px hsl(73 100% 50% / 0.5);
     --glow-intense: 0 0 40px hsl(73 100% 50% / 0.8);
     --gradient-acid: linear-gradient(135deg, hsl(73 100% 50%) 0%, hsl(73 100% 40%) 100%);
     --gradient-void: linear-gradient(180deg, hsl(0 0% 2%) 0%, hsl(0 0% 8%) 100%);
     --gradient-radial: radial-gradient(ellipse at center, hsl(0 0% 8%) 0%, hsl(0 0% 2%) 70%);
     
-    /* Typography */
     --font-display: 'Clash Display', system-ui, sans-serif;
     --font-body: 'Satoshi', system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -95,7 +90,6 @@
 }
 
 @layer components {
-  /* Film Grain Overlay */
   .grain-overlay {
     position: fixed;
     top: 0;
@@ -108,7 +102,6 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   }
 
-  /* Vignette Effect */
   .vignette {
     position: fixed;
     top: 0;
@@ -120,7 +113,6 @@
     background: radial-gradient(ellipse at center, transparent 0%, hsl(0 0% 2% / 0.4) 100%);
   }
 
-  /* Acid Glow Text */
   .text-glow {
     text-shadow: var(--glow-primary);
   }
@@ -129,12 +121,10 @@
     text-shadow: var(--glow-intense);
   }
 
-  /* Kinetic Text */
   .kinetic-text {
     @apply transition-transform duration-75;
   }
 
-  /* Magnetic Button Base */
   .magnetic-btn {
     @apply relative inline-flex items-center justify-center px-8 py-4 font-semibold;
     @apply bg-primary text-primary-foreground rounded-lg;
@@ -146,7 +136,6 @@
     box-shadow: var(--glow-primary);
   }
 
-  /* Bento Card */
   .bento-card {
     @apply relative overflow-hidden rounded-2xl bg-card p-6;
     @apply border border-border/50;
@@ -159,12 +148,10 @@
     transform: translateY(-4px);
   }
 
-  /* Section Container */
   .section-container {
     @apply max-w-7xl mx-auto px-6 md:px-8 py-24 md:py-32;
   }
 
-  /* Link Underline Animation */
   .link-underline {
     @apply relative;
   }
@@ -179,7 +166,6 @@
     @apply origin-left scale-x-100;
   }
 
-  /* Skill Node Pulse */
   @keyframes pulse-glow {
     0%, 100% {
       opacity: 0.6;
@@ -195,7 +181,6 @@
     animation: pulse-glow 2s ease-in-out infinite;
   }
 
-  /* Floating Animation */
   @keyframes float {
     0%, 100% {
       transform: translateY(0px);
@@ -209,7 +194,6 @@
     animation: float 6s ease-in-out infinite;
   }
 
-  /* Gradient Border */
   .gradient-border {
     @apply relative;
   }
@@ -240,5 +224,81 @@
 
   .font-mono {
     font-family: var(--font-mono);
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+::view-transition-old(fade) {
+  animation: fade-out 0.3s ease-out;
+}
+
+::view-transition-new(fade) {
+  animation: fade-in 0.3s ease-in;
+}
+
+::view-transition-old(slide) {
+  animation: slide-out 0.4s ease-out;
+}
+
+::view-transition-new(slide) {
+  animation: slide-in 0.4s ease-in;
+}
+
+::view-transition-old(scale) {
+  animation: scale-out 0.3s ease-out;
+}
+
+::view-transition-new(scale) {
+  animation: scale-in 0.3s ease-in;
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-out {
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes scale-out {
+  to {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(1.2);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
   }
 }

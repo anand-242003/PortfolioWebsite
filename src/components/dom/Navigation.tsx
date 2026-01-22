@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import MagneticButton from '@/components/ui/MagneticButton';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -55,7 +54,6 @@ const Navigation = () => {
             AM<span className="text-primary">.</span>
           </motion.a>
 
-          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <button
@@ -66,16 +64,14 @@ const Navigation = () => {
                 {link.label}
               </button>
             ))}
-            <MagneticButton 
-              variant="primary"
+            <button
               onClick={() => scrollToSection('#contact')}
-              className="px-6 py-2 text-sm"
+              className="px-6 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
             >
               Let's Talk
-            </MagneticButton>
+            </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-foreground"
@@ -99,7 +95,6 @@ const Navigation = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div

@@ -33,12 +33,13 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
       className="bento-card group cursor-pointer"
       onClick={handleClick}
     >
-      {/* Project Image */}
       <div className="relative h-56 mb-6 rounded-xl overflow-hidden">
         {image ? (
           <img 
             src={image} 
             alt={project.title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           />
         ) : (
@@ -51,10 +52,8 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
           </div>
         )}
         
-        {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
         
-        {/* Hover overlay */}
         <motion.div 
           className="absolute inset-0 bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
@@ -62,7 +61,6 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         </motion.div>
       </div>
 
-      {/* Project Info */}
       <h3 className="text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
         {project.title}
       </h3>
@@ -71,7 +69,6 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         {project.description}
       </p>
 
-      {/* Technologies */}
       <div className="flex flex-wrap gap-2 mb-6">
         {project.technologies.slice(0, 4).map((tech) => (
           <span
@@ -88,7 +85,6 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
         )}
       </div>
 
-      {/* Metrics */}
       <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
         {project.metrics.map((metric) => (
           <div key={metric.label} className="text-center">

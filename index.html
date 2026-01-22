@@ -5,34 +5,60 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- SEO Meta Tags -->
+    <meta name="theme-color" content="#000000" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="https://api.fontshare.com" />
+    
     <title>Anand Mishra | Full Stack Developer & AI Engineer</title>
     <meta name="description" content="Portfolio of Anand Mishra - Full Stack Developer specializing in React, Next.js, Node.js, and Generative AI. Building living digital experiences through code and creativity." />
     <meta name="keywords" content="Full Stack Developer, AI Engineer, React, Next.js, Node.js, Portfolio, Web Developer" />
     <meta name="author" content="Anand Mishra" />
     
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://anandmishra.dev/" />
     <meta property="og:title" content="Anand Mishra | Full Stack Developer & AI Engineer" />
     <meta property="og:description" content="Building living digital experiences through code, creativity, and cutting-edge AI technology." />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="https://anandmishra.dev/" />
     <meta name="twitter:title" content="Anand Mishra | Full Stack Developer" />
     <meta name="twitter:description" content="Building living digital experiences through code, creativity, and cutting-edge AI technology." />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
     
-    <!-- Clash Display & Satoshi from Fontshare -->
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
     
+    <link rel="preload" href="/DRLMTTR.png" as="image" />
+    <link rel="preload" href="/JOB_portal.png" as="image" />
+    <link rel="preload" href="/Emware.ai.png" as="image" />
+    <link rel="preload" href="/PortfolioHtml.png" as="image" />
+    
     <style>
-      /* Hide scrollbar for Lenis smooth scroll */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        width: 100%;
+        height: 100%;
+        overflow-x: hidden;
+      }
+      
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: 'Satoshi', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
       html.lenis {
         height: auto;
       }
@@ -41,11 +67,20 @@
         scroll-behavior: auto;
       }
       
-      /* Custom cursor hiding on desktop */
       @media (hover: hover) and (pointer: fine) {
         * {
           cursor: none !important;
         }
+      }
+      
+      .loading-screen {
+        position: fixed;
+        inset: 0;
+        background: #000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
       }
     </style>
   </head>

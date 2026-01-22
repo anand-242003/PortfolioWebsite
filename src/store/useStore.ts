@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { shallow } from 'zustand/shallow';
 
 export interface Skill {
   id: string;
@@ -26,29 +27,100 @@ interface PortfolioStore {
   cursorPosition: { x: number; y: number };
   isLoading: boolean;
   scrollProgress: number;
+  cameraTarget: [number, number, number];
+  neuralNetworkActive: boolean;
   
   setSelectedSkill: (skill: Skill | null) => void;
   setActiveProject: (project: Project | null) => void;
   updateCursorPosition: (x: number, y: number) => void;
   setIsLoading: (loading: boolean) => void;
   setScrollProgress: (progress: number) => void;
+  setCameraTarget: (target: [number, number, number]) => void;
+  setNeuralNetworkActive: (active: boolean) => void;
 }
 
-export const useStore = create<PortfolioStore>((set) => ({
+export const useStore = create<PortfolioStore>((set, get) => ({
   selectedSkill: null,
   activeProject: null,
   cursorPosition: { x: 0, y: 0 },
   isLoading: true,
   scrollProgress: 0,
+  cameraTarget: [0, 0, 5],
+  neuralNetworkActive: true,
   
   setSelectedSkill: (skill) => set({ selectedSkill: skill }),
   setActiveProject: (project) => set({ activeProject: project }),
   updateCursorPosition: (x, y) => set({ cursorPosition: { x, y } }),
   setIsLoading: (loading) => set({ isLoading: loading }),
   setScrollProgress: (progress) => set({ scrollProgress: progress }),
+  setCameraTarget: (target) => set({ cameraTarget: target }),
+  setNeuralNetworkActive: (active) => set({ neuralNetworkActive: active }),
 }));
 
-// Skills Data
+export { shallow };
+
+export const useCameraState = () =>
+  useStore(
+    (state) => ({
+      target: state.cameraTarget,
+      scrollProgress: state.scrollProgress,
+    }),
+    shallow
+  );
+
+export const useUIState = () =>
+  useStore(
+    (state) => ({
+      isLoading: state.isLoading,
+      neuralNetworkActive: state.neuralNetworkActive,
+    }),
+    shallow
+  );
+
+export const useInteractionState = () =>
+  useStore(
+    (state) => ({
+      selectedSkill: state.selectedSkill,
+      activeProject: state.activeProject,
+      cursorPosition: state.cursorPosition,
+    }),
+    shallow
+  );
+
+export const getFilteredProjects = (technology?: string): Project[] => {
+  if (!technology) return projects;
+  return projects.filter((project) =>
+    project.technologies.some((tech) =>
+      tech.toLowerCase().includes(technology.toLowerCase())
+    )
+  );
+};
+
+export const useProjectsBySkill = () => {
+  const selectedSkill = useStore((state) => state.selectedSkill);
+  
+  if (!selectedSkill) return projects;
+  
+  return projects.filter((project) =>
+    project.technologies.some((tech) =>
+      tech.toLowerCase().includes(selectedSkill.name.toLowerCase())
+    )
+  );
+};
+
+export const getSkillById = (skillId: string): Skill | undefined => {
+  return skills.find((skill) => skill.id === skillId);
+};
+
+export const getConnectedSkills = (skillId: string): Skill[] => {
+  const skill = getSkillById(skillId);
+  if (!skill) return [];
+  
+  return skill.connections
+    .map((connectionId) => getSkillById(connectionId))
+    .filter((s): s is Skill => s !== undefined);
+};
+
 export const skills: Skill[] = [
   { id: 'javascript', name: 'JavaScript', category: 'frontend', proficiency: 95, connections: ['react', 'nodejs', 'typescript'] },
   { id: 'react', name: 'React', category: 'frontend', proficiency: 95, connections: ['nextjs', 'typescript', 'tailwind', 'redux'] },
@@ -57,18 +129,26 @@ export const skills: Skill[] = [
   { id: 'tailwind', name: 'Tailwind CSS', category: 'frontend', proficiency: 95, connections: ['react', 'nextjs'] },
   { id: 'html5', name: 'HTML5', category: 'frontend', proficiency: 98, connections: ['css3', 'javascript'] },
   { id: 'css3', name: 'CSS3', category: 'frontend', proficiency: 95, connections: ['html5', 'tailwind'] },
-  { id: 'nodejs', name: 'Node.js', category: 'backend', proficiency: 90, connections: ['express', 'prisma', 'typescript'] },
-  { id: 'express', name: 'Express', category: 'backend', proficiency: 88, connections: ['nodejs', 'prisma'] },
+  { id: 'nodejs', name: 'Node.js', category: 'backend', proficiency: 90, connections: ['express', 'prisma', 'typescript', 'mongodb'] },
+  { id: 'express', name: 'Express', category: 'backend', proficiency: 88, connections: ['nodejs', 'prisma', 'mongodb'] },
+  { id: 'python', name: 'Python', category: 'backend', proficiency: 85, connections: ['nodejs', 'aws'] },
   { id: 'redux', name: 'Redux', category: 'backend', proficiency: 85, connections: ['react', 'typescript'] },
-  { id: 'prisma', name: 'Prisma', category: 'database', proficiency: 85, connections: ['nodejs', 'mysql', 'typescript'] },
+  { id: 'zod', name: 'Zod', category: 'backend', proficiency: 82, connections: ['typescript', 'nodejs'] },
+  { id: 'prisma', name: 'Prisma', category: 'database', proficiency: 85, connections: ['nodejs', 'mysql', 'typescript', 'mongodb'] },
   { id: 'mysql', name: 'MySQL', category: 'database', proficiency: 82, connections: ['prisma', 'nodejs'] },
-  { id: 'docker', name: 'Docker', category: 'tools', proficiency: 75, connections: ['nodejs', 'mysql'] },
-  { id: 'git', name: 'Git', category: 'tools', proficiency: 92, connections: ['docker', 'vscode'] },
+  { id: 'mongodb', name: 'MongoDB', category: 'database', proficiency: 88, connections: ['nodejs', 'express', 'prisma'] },
+  { id: 'docker', name: 'Docker', category: 'tools', proficiency: 75, connections: ['nodejs', 'mysql', 'aws'] },
+  { id: 'git', name: 'Git', category: 'tools', proficiency: 92, connections: ['github', 'vscode'] },
+  { id: 'github', name: 'GitHub', category: 'tools', proficiency: 90, connections: ['git', 'vscode'] },
   { id: 'postman', name: 'Postman', category: 'tools', proficiency: 88, connections: ['nodejs', 'express'] },
-  { id: 'vscode', name: 'VS Code', category: 'tools', proficiency: 95, connections: ['git'] },
+  { id: 'vscode', name: 'VS Code', category: 'tools', proficiency: 95, connections: ['git', 'github'] },
+  { id: 'aws', name: 'AWS', category: 'tools', proficiency: 78, connections: ['docker', 'nodejs', 'python'] },
+  { id: 'vercel', name: 'Vercel', category: 'tools', proficiency: 85, connections: ['nextjs', 'react'] },
+  { id: 'render', name: 'Render', category: 'tools', proficiency: 80, connections: ['nodejs', 'docker'] },
+  { id: 'eslint', name: 'ESLint', category: 'tools', proficiency: 88, connections: ['typescript', 'vscode'] },
+  { id: 'markdown', name: 'Markdown', category: 'tools', proficiency: 90, connections: ['github', 'vscode'] },
 ];
 
-// Projects Data
 export const projects: Project[] = [
   {
     id: 'drk-mttr',

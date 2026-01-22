@@ -10,10 +10,8 @@ import ContactSection from '@/components/dom/ContactSection';
 import Footer from '@/components/dom/Footer';
 import FluidCursor from '@/components/ui/FluidCursor';
 
-// Lazy load heavy 3D component
 const NeuralNetworkEnhanced = lazy(() => import('@/components/canvas/NeuralNetworkEnhanced'));
 
-// Loading screen component
 const LoadingScreen = () => (
   <motion.div
     initial={{ opacity: 1 }}
@@ -47,7 +45,6 @@ const LoadingScreen = () => (
   </motion.div>
 );
 
-// 3D Loading fallback
 const Canvas3DFallback = () => (
   <div className="absolute inset-0 bg-gradient-radial from-muted/20 to-transparent" />
 );
@@ -56,41 +53,32 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
   const mousePosition = useMousePosition();
   
-  // Initialize smooth scroll
   useSmoothScroll();
 
-  // Simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2000);
+    }, 1000);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      {/* Loading Screen */}
       <AnimatePresence>
         {isLoading && <LoadingScreen />}
       </AnimatePresence>
 
-      {/* Fluid Cursor (desktop only) */}
       <div className="hidden md:block">
         <FluidCursor />
       </div>
 
-      {/* Film Grain Overlay */}
       <div className="grain-overlay" />
       
-      {/* Vignette Effect */}
       <div className="vignette" />
 
-      {/* Navigation */}
       <Navigation />
 
-      {/* Hero Section */}
       <section className="relative h-screen overflow-hidden bg-background">
-        {/* Subtle diagonal lines pattern */}
         <div className="absolute inset-0 opacity-10">
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
@@ -102,25 +90,19 @@ const Index = () => {
           </svg>
         </div>
         
-        {/* 3D Canvas with spheres and globe */}
         <Suspense fallback={<Canvas3DFallback />}>
           <NeuralNetworkEnhanced mousePosition={mousePosition} />
         </Suspense>
         
-        {/* Content */}
         <HeroText />
       </section>
 
-      {/* Projects Section */}
       <BentoGrid />
 
-      {/* Skills Section */}
       <SkillsSection />
 
-      {/* Contact Section */}
       <ContactSection />
 
-      {/* Footer */}
       <Footer />
     </>
   );
