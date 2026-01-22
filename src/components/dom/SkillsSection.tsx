@@ -1,31 +1,31 @@
 import { skills } from '@/store/useStore';
 
 const skillIcons: Record<string, string> = {
-  javascript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
-  react: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
-  nextjs: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg',
-  typescript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
-  tailwind: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg',
-  html5: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
-  css3: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
-  nodejs: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
-  express: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original-wordmark.svg',
-  python: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
-  redux: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg',
+  javascript: '/js.png',
+  react: '/react.png',
+  nextjs: '/nextjs.png',
+  typescript: '/typescript.png',
+  tailwind: '/icons8-tailwind-css-48.png',
+  html5: '/html-5.png',
+  css3: '/css-3.png',
+  nodejs: '/icons8-nodejs-48.png',
+  express: '/icons8-express-js-48.png',
+  python: '/icons8-python-48.png',
+  redux: '/icons8-redux-48.png',
   zod: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDIwMCAyMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIiByeD0iMTAiIGZpbGw9IiMzRTdDRkYiLz4KPHBhdGggZD0iTTUwIDYwSDEzMEwxMzAgODBMNzAgMTQwSDE1MEwxNTAgMTYwSDcwTDcwIDE0MEwxMzAgODBINTBMNTAgNjBaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4=',
-  prisma: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/prisma/prisma-original.svg',
-  mysql: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
-  mongodb: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
-  docker: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
-  git: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
-  github: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg',
-  postman: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg',
-  vscode: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg',
-  aws: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg',
-  vercel: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vercel/vercel-original.svg',
-  render: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/render/render-original.svg',
-  eslint: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/eslint/eslint-original.svg',
-  markdown: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/markdown/markdown-original.svg',
+  prisma: '/icons8-prisma-orm-48.png',
+  mysql: '/icons8-mysql-24.png',
+  mongodb: '/icons8-mongodb-24.png',
+  docker: '/icons8-docker-48.png',
+  git: '/icons8-git-48.png',
+  github: '/icons8-github-50.png',
+  postman: '/icons8-postman-inc-24.png',
+  vscode: '/icons8-visual-studio-48.png',
+  aws: '/icons8-aws-48.png',
+  vercel: '/icons8-vercel-50.png',
+  render: '/render.png',
+  eslint: '/icons8-eslint-48.png',
+  markdown: '/icons8-markdown-50.png',
 };
 
 const categories: Record<string, string[]> = {
@@ -70,8 +70,8 @@ const SkillsSection = () => {
                       className="flex items-center gap-3 p-3 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/20 transition-colors"
                     >
                       <div
-                        className={`w-8 h-8 shrink-0 ${
-                          ['express', 'github', 'nextjs', 'vercel', 'render', 'eslint'].includes(skill.id) ? 'bg-white rounded p-1' : ''
+                        className={`w-8 h-8 shrink-0 flex items-center justify-center ${
+                          ['express', 'github', 'nextjs', 'vercel', 'eslint'].includes(skill.id) ? 'bg-white rounded p-1' : ''
                         }`}
                       >
                         <img 

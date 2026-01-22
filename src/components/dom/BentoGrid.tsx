@@ -33,14 +33,14 @@ const ProjectCard = ({ project, index }: ProjectCardProps) => {
       className="bento-card group cursor-pointer"
       onClick={handleClick}
     >
-      <div className="relative h-56 mb-6 rounded-xl overflow-hidden">
+      <div className="relative h-48 sm:h-56 mb-6 rounded-xl overflow-hidden">
         {image ? (
           <img 
             src={image} 
             alt={project.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
