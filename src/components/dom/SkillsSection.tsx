@@ -134,15 +134,20 @@ const SkillsSection = memo(() => {
   }, []);
   
   return (
-    <section id="skills" className="py-20">
+    <section id="skills" className="py-20" aria-label="Technical Skills">
       <div className="section-container max-w-5xl mx-auto">
-        <div ref={headerRef} className="mb-12 scroll-animate slide-up">
+        <header ref={headerRef} className="mb-12 scroll-animate slide-up">
           <h2 className="text-3xl font-mono font-bold text-foreground">
-            <span className="text-primary mr-2">~/</span>skills-tree
+            <span className="text-primary mr-2" aria-hidden="true">~/</span>
+            <span>Technical Skills & Expertise</span>
           </h2>
-        </div>
+          <p className="text-muted-foreground mt-4 max-w-2xl">
+            Comprehensive tech stack spanning frontend, backend, databases, and DevOps. 
+            Proficient in modern JavaScript ecosystem with hands-on experience in AI/ML integration.
+          </p>
+        </header>
 
-        <div className="relative border-l-2 border-dashed border-white/10 ml-4 md:ml-10 space-y-12">
+        <div className="relative border-l-2 border-dashed border-white/10 ml-4 md:ml-10 space-y-12" role="list">
           {Object.entries(categories).map(([categoryName, categoryIds], index) => {
             const categorySkills = skills.filter(skill => categoryIds.includes(skill.id));
             

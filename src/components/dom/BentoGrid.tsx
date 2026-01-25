@@ -35,9 +35,9 @@ const ProjectCard = memo(({ project, index }: { project: typeof projects[0]; ind
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="timeline__content">
-        <h1 className="text-3xl font-display font-bold text-primary mb-4">
+        <h3 className="text-3xl font-display font-bold text-primary mb-4">
           {project.title}
-        </h1>
+        </h3>
         
         <div className="flex flex-wrap gap-2 mb-4">
           {project.technologies.slice(0, 5).map((tech) => (
@@ -100,17 +100,18 @@ const ProjectCard = memo(({ project, index }: { project: typeof projects[0]; ind
         </div>
       </div>
 
-      <div className="timeline__image">
+      <figure className="timeline__image">
         <img 
           src={`/${project.image === 'drk-mttr' ? 'DRLMTTR.jpg' : project.image === 'job-portal' ? 'JOB_portal.jpg' : 'Emware.ai.jpg'}`}
-          alt={project.title}
+          alt={`${project.title} - ${project.description}. Built with ${project.technologies.slice(0, 3).join(', ')}`}
+          title={project.title}
           loading="lazy"
           decoding="async"
           width="400"
           height="300"
           className="w-full h-full object-cover"
         />
-      </div>
+      </figure>
     </article>
   );
 });
@@ -138,20 +139,21 @@ const BentoGrid = () => {
   }, []);
   
   return (
-    <section id="projects" className="section-container py-20">
-      <div ref={headerRef} className="mb-16 text-center scroll-animate slide-up">
-        <span className="text-primary font-mono text-sm uppercase tracking-widest mb-4 block">
+    <section id="projects" className="section-container py-20" aria-label="Featured Projects">
+      <header ref={headerRef} className="mb-16 text-center scroll-animate slide-up">
+        <span className="text-primary font-mono text-sm uppercase tracking-widest mb-4 block" aria-hidden="true">
           Featured Work
         </span>
         <h2 className="text-5xl md:text-6xl font-display font-bold text-foreground mb-6">
-          Projects
+          Projects & Portfolio
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Building digital experiences that push the boundaries of web technology.
+          Building digital experiences that push the boundaries of web technology. 
+          From AI-powered platforms to real-time applications, each project showcases modern full-stack development expertise.
         </p>
-      </div>
+      </header>
 
-      <div className="timeline max-w-5xl mx-auto">
+      <div className="timeline max-w-5xl mx-auto" role="list" aria-label="Project showcase">
         {projects.map((project, index) => (
           <ProjectCard key={project.id} project={project} index={index} />
         ))}

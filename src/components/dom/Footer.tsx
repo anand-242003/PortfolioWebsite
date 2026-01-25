@@ -33,7 +33,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative py-12 px-6 border-t border-border">
+    <footer role="contentinfo" className="relative py-12 px-6 border-t border-border" aria-label="Site footer">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo */}

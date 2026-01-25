@@ -33,6 +33,8 @@ const Navigation = memo(() => {
   return (
     <>
       <nav
+        role="navigation"
+        aria-label="Main navigation"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled 
             ? 'py-4 bg-background/80 backdrop-blur-xl border-b border-border/50' 
@@ -40,9 +42,11 @@ const Navigation = memo(() => {
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo */}
+          {/* Logo with proper accessibility */}
           <a
             href="#"
+            aria-label="Anand Mishra - Home"
+            title="Go to homepage"
             className="font-display font-bold text-2xl text-foreground hover:text-primary transition-colors"
           >
             AM<span className="text-primary">.</span>

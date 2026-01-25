@@ -9,28 +9,42 @@ import Footer from '@/components/dom/Footer';
 const DataFlowLines = lazy(() => import('@/components/canvas/DataFlowLines'));
 
 const Canvas3DFallback = () => (
-  <div className="absolute inset-0 bg-gradient-radial from-muted/20 to-transparent" />
+  <div className="absolute inset-0 bg-gradient-radial from-muted/20 to-transparent" aria-hidden="true" />
 );
 
 const Index = () => {
   return (
     <>
-      <Navigation />
+      {/* Semantic header with navigation */}
+      <header role="banner">
+        <Navigation />
+      </header>
 
-      <section className="relative h-screen overflow-hidden bg-background">
-        <Suspense fallback={<Canvas3DFallback />}>
-          <DataFlowLines />
-        </Suspense>
+      {/* Main content area for SEO */}
+      <main id="main-content" role="main">
+        {/* Hero Section */}
+        <section 
+          id="hero" 
+          className="relative h-screen overflow-hidden bg-background"
+          aria-label="Introduction"
+        >
+          <Suspense fallback={<Canvas3DFallback />}>
+            <DataFlowLines />
+          </Suspense>
+          <HeroText />
+        </section>
 
-        <HeroText />
-      </section>
+        {/* Projects Section */}
+        <BentoGrid />
 
-      <BentoGrid />
+        {/* Skills Section */}
+        <SkillsSection />
 
-      <SkillsSection />
+        {/* Contact Section */}
+        <ContactSection />
+      </main>
 
-      <ContactSection />
-
+      {/* Semantic footer */}
       <Footer />
     </>
   );
