@@ -17,7 +17,7 @@ const Navigation = memo(() => {
     { label: 'Projects', href: '#projects' },
     { label: 'Skills', href: '#skills' },
     { label: 'Contact', href: '#contact' },
-    { label: 'Resume', href: '/Resume-Anand Mishra (7).pdf', external: true },
+    { label: 'Resume', href: '/Anand Mishra.pdf', external: true },
   ];
 
   const scrollToSection = (href: string, external?: boolean) => {
