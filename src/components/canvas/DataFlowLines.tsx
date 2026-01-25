@@ -11,10 +11,28 @@ const DataFlowLines = () => {
 
     // Detect device performance
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const isLowEndAndroid = /Android/i.test(navigator.userAgent) && (
+      navigator.hardwareConcurrency <= 4 || 
+      /Samsung.*A[0-3][0-9]|SM-A[0-3]/i.test(navigator.userAgent) ||
+      window.innerWidth <= 480
+    );
     const isLowPerf = isMobile || navigator.hardwareConcurrency <= 4;
     
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    
+    // Skip WebGL entirely on very low-end mobile devices for better performance
+    if (isLowEndAndroid || prefersReducedMotion) {
+      return; // Don't render anything - these lines are decorative only
+    }
+    
+    // Check WebGL support and context
+    const testCanvas = document.createElement('canvas');
+    const gl = testCanvas.getContext('webgl') || testCanvas.getContext('experimental-webgl');
+    if (!gl) {
+      console.warn('WebGL not supported, skipping DataFlowLines');
+      return;
+    }
 
     // Configuration - optimized for performance with good visibility
     const params = {
@@ -355,7 +373,7 @@ const DataFlowLines = () => {
   return (
     <div
       ref={containerRef}
-      className="absolute inset-0 w-full h-full"
+      className="absolute inset-0 w-full h-full data-flow-container"
       style={{ zIndex: 0, willChange: 'auto' }}
     />
   );

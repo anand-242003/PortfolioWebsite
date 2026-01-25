@@ -243,6 +243,13 @@
       display: none;
     }
   }
+  
+  /* Hide WebGL data flow lines on mobile for performance */
+  @media (max-width: 768px) {
+    .data-flow-container {
+      display: none !important;
+    }
+  }
 
   .text-glow {
     text-shadow: var(--glow-primary);
@@ -500,6 +507,10 @@
   .timeline-item {
     grid-template-columns: 1fr;
     grid-gap: 1em;
+    /* Remove the vertical line and marker on mobile */
+    background: none !important;
+    padding-left: 0;
+    padding-right: 0;
   }
   
   .timeline-item:nth-child(odd) .timeline__image {
@@ -509,5 +520,9 @@
   
   .timeline__image {
     width: 100%;
+  }
+  
+  .timeline__content {
+    padding: 1.25em;
   }
 }
