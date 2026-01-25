@@ -177,6 +177,7 @@ export const projects: Project[] = [
     ],
     image: 'job-portal',
     link: 'https://jobportal-frontend-navy-xi.vercel.app/',
+    github: 'https://github.com/anand-242003/jobportal',
   },
   {
     id: 'emware-ai',
@@ -191,19 +192,6 @@ export const projects: Project[] = [
     ],
     image: 'emware-ai',
     link: 'https://em-ware-ai-ia16.vercel.app/',
-  },
-  {
-    id: 'portfolio-html',
-    title: 'Personal Portfolio',
-    description: 'Clean and responsive portfolio website built with HTML & CSS',
-    longDescription: 'A minimalist portfolio website showcasing projects and skills, built from scratch using pure HTML and CSS with responsive design principles.',
-    technologies: ['HTML', 'CSS', 'JavaScript'],
-    metrics: [
-      { label: 'Pure Code', value: 'HTML/CSS' },
-      { label: 'Design', value: 'Responsive' },
-      { label: 'Performance', value: '100' },
-    ],
-    image: 'portfolio-html',
-    github: 'https://github.com/anand-242003/Portfolio',
+    github: 'https://github.com/anand-242003/EMWare.Ai',
   },
 ];
