@@ -78,6 +78,7 @@ const SkillsSection = () => {
                           src={skillIcons[skill.id]} 
                           alt={skill.name} 
                           className="w-full h-full object-contain"
+                          loading="lazy"
                         />
                       </div>
                       

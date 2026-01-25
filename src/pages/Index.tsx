@@ -1,6 +1,5 @@
 import { Suspense, lazy, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useMousePosition } from '@/hooks/useMousePosition';
 import { useSmoothScroll } from '@/hooks/useSmoothScroll';
 import Navigation from '@/components/dom/Navigation';
 import HeroText from '@/components/dom/HeroText';
@@ -8,9 +7,8 @@ import BentoGrid from '@/components/dom/BentoGrid';
 import SkillsSection from '@/components/dom/SkillsSection';
 import ContactSection from '@/components/dom/ContactSection';
 import Footer from '@/components/dom/Footer';
-import FluidCursor from '@/components/ui/FluidCursor';
 
-const NeuralNetworkEnhanced = lazy(() => import('@/components/canvas/NeuralNetworkEnhanced'));
+const DataFlowLines = lazy(() => import('@/components/canvas/DataFlowLines'));
 
 const LoadingScreen = () => (
   <motion.div
@@ -51,15 +49,25 @@ const Canvas3DFallback = () => (
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const mousePosition = useMousePosition();
+  const [show3D, setShow3D] = useState(false);
   
   useSmoothScroll();
 
   useEffect(() => {
+    // Quick initial load
     const timer = setTimeout(() => {
       setIsLoading(false);
+    }, 500);
+    
+    // Delay 3D canvas to improve LCP
+    const canvas3DTimer = setTimeout(() => {
+      setShow3D(true);
     }, 1000);
-    return () => clearTimeout(timer);
+    
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(canvas3DTimer);
+    };
   }, []);
 
   return (
@@ -67,10 +75,6 @@ const Index = () => {
       <AnimatePresence>
         {isLoading && <LoadingScreen />}
       </AnimatePresence>
-
-      <div className="hidden md:block">
-        <FluidCursor />
-      </div>
 
       <div className="grain-overlay" />
       
@@ -90,9 +94,11 @@ const Index = () => {
           </svg>
         </div>
         
-        <Suspense fallback={<Canvas3DFallback />}>
-          <NeuralNetworkEnhanced mousePosition={mousePosition} />
-        </Suspense>
+        {show3D && (
+          <Suspense fallback={<Canvas3DFallback />}>
+            <DataFlowLines />
+          </Suspense>
+        )}
         
         <HeroText />
       </section>

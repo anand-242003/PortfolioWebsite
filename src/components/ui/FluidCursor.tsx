@@ -1,107 +1,65 @@
-import { useEffect, useRef, useCallback } from 'react';
-import { useMousePosition } from '@/hooks/useMousePosition';
-
-interface Particle {
-  x: number;
-  y: number;
-  opacity: number;
-  scale: number;
-}
+import { useEffect, useRef } from 'react';
 
 const FluidCursor = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Particle[]>([]);
-  const mousePosition = useMousePosition();
-  const animationRef = useRef<number>();
-  const frameCountRef = useRef(0);
-
-  const animate = useCallback(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d', { alpha: true });
-    if (!ctx) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    frameCountRef.current++;
-    if (frameCountRef.current % 3 === 0 && (mousePosition.x !== 0 || mousePosition.y !== 0)) {
-      particlesRef.current.push({
-        x: mousePosition.x,
-        y: mousePosition.y,
-        opacity: 0.5,
-        scale: 1,
-      });
-    }
-
-    particlesRef.current = particlesRef.current.filter((particle) => {
-      particle.opacity -= 0.04;
-      particle.scale *= 0.94;
-
-      if (particle.opacity <= 0) return false;
-
-      const gradient = ctx.createRadialGradient(
-        particle.x,
-        particle.y,
-        0,
-        particle.x,
-        particle.y,
-        15 * particle.scale
-      );
-      gradient.addColorStop(0, `rgba(204, 255, 0, ${particle.opacity})`);
-      gradient.addColorStop(1, 'rgba(204, 255, 0, 0)');
-
-      ctx.beginPath();
-      ctx.arc(particle.x, particle.y, 15 * particle.scale, 0, Math.PI * 2);
-      ctx.fillStyle = gradient;
-      ctx.fill();
-
-      return true;
-    });
-
-    if (mousePosition.x !== 0 || mousePosition.y !== 0) {
-      ctx.beginPath();
-      ctx.arc(mousePosition.x, mousePosition.y, 6, 0, Math.PI * 2);
-      ctx.fillStyle = '#ccff00';
-      ctx.fill();
-    }
-
-    if (particlesRef.current.length > 20) {
-      particlesRef.current = particlesRef.current.slice(-20);
-    }
-
-    animationRef.current = requestAnimationFrame(animate);
-  }, [mousePosition]);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorDotRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>();
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const currentPosRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY };
     };
 
-    handleResize();
-    window.addEventListener('resize', handleResize, { passive: true });
+    const animate = () => {
+      // Smooth lerp animation
+      currentPosRef.current.x += (mouseRef.current.x - currentPosRef.current.x) * 0.15;
+      currentPosRef.current.y += (mouseRef.current.y - currentPosRef.current.y) * 0.15;
 
-    animationRef.current = requestAnimationFrame(animate);
+      if (cursorRef.current && cursorDotRef.current) {
+        cursorRef.current.style.transform = `translate(${currentPosRef.current.x}px, ${currentPosRef.current.y}px)`;
+        cursorDotRef.current.style.transform = `translate(${mouseRef.current.x}px, ${mouseRef.current.y}px)`;
+      }
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    rafRef.current = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafRef.current) {
+        cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [animate]);
+  }, []);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-[9999]"
-      style={{ mixBlendMode: 'screen' }}
-      aria-hidden="true"
-    />
+    <>
+      {/* Trailing cursor */}
+      <div
+        ref={cursorRef}
+        className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-[9999] will-change-transform"
+        style={{
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        <div className="w-full h-full rounded-full border-2 border-primary/50 bg-primary/10" />
+      </div>
+      
+      {/* Dot cursor */}
+      <div
+        ref={cursorDotRef}
+        className="fixed top-0 left-0 w-2 h-2 pointer-events-none z-[9999] will-change-transform"
+        style={{
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        <div className="w-full h-full rounded-full bg-primary" />
+      </div>
+    </>
   );
 };
 

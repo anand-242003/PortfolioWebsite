@@ -1,115 +1,16 @@
 import { motion } from 'framer-motion';
-import { projects, Project } from '@/store/useStore';
-
-const projectImages: Record<string, string> = {
-  'job-portal': '/JOB_portal.png',
-  'emware-ai': '/Emware.ai.png',
-  'drk-mttr': '/DRLMTTR.png',
-  'portfolio-html': '/PortfolioHtml.png',
-};
-
-interface ProjectCardProps {
-  project: Project;
-  index: number;
-}
-
-const ProjectCard = ({ project, index }: ProjectCardProps) => {
-  const image = projectImages[project.image] || '';
-
-  const handleClick = () => {
-    if (project.link) {
-      window.open(project.link, '_blank');
-    } else if (project.github) {
-      window.open(project.github, '_blank');
-    }
-  };
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
-      className="bento-card group cursor-pointer"
-      onClick={handleClick}
-    >
-      <div className="relative h-48 sm:h-56 mb-6 rounded-xl overflow-hidden">
-        {image ? (
-          <img 
-            src={image} 
-            alt={project.title}
-            loading="lazy"
-            decoding="async"
-            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-            <div className="w-24 h-24 rounded-full bg-primary/10 animate-glow-pulse flex items-center justify-center">
-              <span className="text-4xl font-display font-bold text-primary">
-                {project.title.charAt(0)}
-              </span>
-            </div>
-          </div>
-        )}
-        
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent opacity-60" />
-        
-        <motion.div 
-          className="absolute inset-0 bg-primary/90 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
-          <span className="text-primary-foreground font-display font-bold text-lg">View Project</span>
-        </motion.div>
-      </div>
-
-      <h3 className="text-2xl font-display font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
-        {project.title}
-      </h3>
-      
-      <p className="text-muted-foreground mb-4 leading-relaxed">
-        {project.description}
-      </p>
-
-      <div className="flex flex-wrap gap-2 mb-6">
-        {project.technologies.slice(0, 4).map((tech) => (
-          <span
-            key={tech}
-            className="px-3 py-1 text-xs font-mono bg-muted rounded-full text-muted-foreground"
-          >
-            {tech}
-          </span>
-        ))}
-        {project.technologies.length > 4 && (
-          <span className="px-3 py-1 text-xs font-mono bg-muted rounded-full text-muted-foreground">
-            +{project.technologies.length - 4}
-          </span>
-        )}
-      </div>
-
-      <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
-        {project.metrics.map((metric) => (
-          <div key={metric.label} className="text-center">
-            <div className="text-xl font-display font-bold text-primary">
-              {metric.value}
-            </div>
-            <div className="text-xs text-muted-foreground uppercase tracking-wider">
-              {metric.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </motion.div>
-  );
-};
+import { projects } from '@/store/useStore';
+import { FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
 
 const BentoGrid = () => {
   return (
-    <section id="projects" className="section-container">
+    <section id="projects" className="section-container py-20">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="mb-16"
+        className="mb-16 text-center"
       >
         <span className="text-primary font-mono text-sm uppercase tracking-widest mb-4 block">
           Featured Work
@@ -117,14 +18,97 @@ const BentoGrid = () => {
         <h2 className="text-5xl md:text-6xl font-display font-bold text-foreground mb-6">
           Projects
         </h2>
-        <p className="text-xl text-muted-foreground max-w-2xl">
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Building digital experiences that push the boundaries of web technology.
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="timeline max-w-5xl mx-auto">
         {projects.map((project, index) => (
-          <ProjectCard key={project.id} project={project} index={index} />
+          <motion.article
+            key={project.id}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className="timeline-item"
+          >
+            <div className="timeline__content">
+              <h1 className="text-3xl font-display font-bold text-primary mb-4">
+                {project.title}
+              </h1>
+              
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.technologies.slice(0, 5).map((tech) => (
+                  <span
+                    key={tech}
+                    className="px-3 py-1 text-xs font-mono bg-primary/10 border border-primary/20 rounded-full text-primary"
+                  >
+                    {tech}
+                  </span>
+                ))}
+                {project.technologies.length > 5 && (
+                  <span className="px-3 py-1 text-xs font-mono bg-primary/10 border border-primary/20 rounded-full text-primary">
+                    +{project.technologies.length - 5}
+                  </span>
+                )}
+              </div>
+
+              <hr className="border-border opacity-30 mb-4" />
+              
+              <p className="text-muted-foreground leading-relaxed mb-6">
+                {project.longDescription}
+              </p>
+
+              <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-muted/30 rounded-lg">
+                {project.metrics.map((metric) => (
+                  <div key={metric.label} className="text-center">
+                    <div className="text-lg font-display font-bold text-primary">
+                      {metric.value}
+                    </div>
+                    <div className="text-xs text-muted-foreground uppercase tracking-wider">
+                      {metric.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                {project.link && (
+                  <a
+                    href={project.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    <FaExternalLinkAlt className="w-4 h-4" />
+                    Live Demo
+                  </a>
+                )}
+                {project.github && (
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 bg-card border border-border text-foreground rounded-lg font-medium hover:bg-muted transition-colors"
+                  >
+                    <FaGithub className="w-4 h-4" />
+                    View Code
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div className="timeline__image">
+              <img 
+                src={`/${project.image === 'drk-mttr' ? 'DRLMTTR.png' : project.image === 'job-portal' ? 'JOB_portal.png' : 'Emware.ai.png'}`}
+                alt={project.title}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.article>
         ))}
       </div>
     </section>
