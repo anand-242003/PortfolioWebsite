@@ -17,7 +17,7 @@ const DataFlowLines = () => {
     // Configuration - adjusted for performance with your color scheme
     const params = {
       colorBg: '#050505', // void-black
-      colorLine: '#464646', // subtle gray
+      colorLine: '#8c8c8c', // subtle gray
       colorSignal: '#ccff00', // acid-green (primary)
       colorSignal2: '#3b82f6', // signal-blue (accent)
       useColor2: true,
