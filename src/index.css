@@ -244,12 +244,12 @@
     }
   }
   
-  /* Hide WebGL data flow lines on mobile for performance */
-  @media (max-width: 768px) {
-    .data-flow-container {
-      display: none !important;
-    }
+/* Hide WebGL data flow lines on mobile for performance */
+@media (max-width: 768px) {
+  .data-flow-container {
+    display: none !important;
   }
+}
 
   .text-glow {
     text-shadow: var(--glow-primary);

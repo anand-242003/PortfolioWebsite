@@ -21,9 +21,9 @@ const DataFlowLines = () => {
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
-    // Skip WebGL entirely on very low-end mobile devices for better performance
-    if (isLowEndAndroid || prefersReducedMotion) {
-      return; // Don't render anything - these lines are decorative only
+    // Skip WebGL only on very low-end mobile devices
+    if (isLowEndAndroid) {
+      return; // Don't render anything on low-end Android
     }
     
     // Check WebGL support and context
